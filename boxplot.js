@@ -1,11 +1,8 @@
-
-
+(function(){
 var airportCode = ['BOS','SFO','LAX','JFK','SEA']
 var margin = {top: 30, right: 30, bottom: 70, left: 80},
     width = 800 - margin.left - margin.right,
     height = 800 - margin.top - margin.bottom;
-
-
 
 var table
 var targetYear = '2015'
@@ -225,3 +222,4 @@ d3.csv("https://corgis-edu.github.io/corgis/datasets/csv/airlines/airlines.csv")
 
 })
 
+})();

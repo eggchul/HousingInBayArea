@@ -12,6 +12,26 @@
 </head>
 
 <style type="text/css">
+	.axis--x path {
+	  display: none;
+	}
+
+	div.tooltip {
+	    position: absolute;
+	    text-align: center;
+	    padding: 2px;
+	    font: 12px sans-serif;
+	    background: lightsteelblue;
+	    border: 0px;
+	    border-radius: 8px;
+	    pointer-events: none;
+	}
+
+	.line {
+	  fill: none;
+	  stroke: steelblue;
+	  stroke-width: 1.5px;
+	}
 
 	.titleFont{
 		color: darkcyan;
@@ -50,7 +70,7 @@
 	    <!-- Right-sided navbar links. Hide them on small screens -->
 	    <div class="w3-right w3-hide-small">
 	      <a href="#about" class="w3-bar-item w3-button">About</a>
-	      <a href="#trend" class="w3-bar-item w3-button">Price Trend</a>
+	      <a href="#price-trend" class="w3-bar-item w3-button">Price Trend</a>
 	      <a href="#new-listing" class="w3-bar-item w3-button">New Listing</a>
 	      <a href="#sale-bitcoin" class="w3-bar-item w3-button">Sale Price & BitCoin</a>
 	      <a href="#contact" class="w3-bar-item w3-button">Contact</a>
@@ -61,7 +81,7 @@
 <!-- Header -->
 	<header class="w3-display-container w3-content w3-wide" style="max-width:1600px;min-width:500px" id="home">
 	  <div class="w3-display-bottomleft w3-padding-large w3-opacity">
-	    <h1 class="w3-xxlarge">Le Catering</h1>
+	    <h1 class="w3-xxlarge">Housing in Bay Area</h1>
 	  </div>
 	</header>
 
@@ -71,6 +91,8 @@
 	  <!-- About Section -->
 	  <div class="w3-row w3-padding-64" id="about">
 	    <div class="w3-col m6 w3-padding-large w3-hide-small">
+	    	<div id="city-rank"></div>
+	     	<div id="city-rank-tool"></div>
 	    </div>
 
 	    <div class="w3-col m6 w3-padding-large">
@@ -79,35 +101,42 @@
 	      <p class="w3-large"> Housing has always been an essential concern for people the whole time. Ever since COVID19, most people have to stay home and do work remotely, therefore some of them move out of the city and find a less expensive place to stay. This draws my attention to the housing market in the San Francisco bay area. There are many cities in the bay area, so in order to smoothly start this final project, I would choose 5 of the cities listed on
 	      	<span class="w3-tag w3-light-grey"><a href="https://www.niche.com/places-to-live/search/best-cities/m/san-francisco-metro-area/" target="_blank">Niche.com</a></span>  “2021 Best Cities to Live in the San Francisco Bay Area'' as my target cities for analysis. In addition, Bitcoin has been a hot issue since 2017, especially those dramatic changes in recent months. I would like to bring it together with this analysis and see if there is any connection between Bitcoin and the housing market in the bay area. The time range for this project will be set between 2015 and 2020.</p>
 	      <p class="w3-large w3-text-grey w3-hide-medium">Cities in bay area</p>
+
 	    </div>
 	  </div>
 	  
 	  <hr>
 	  
 	  <!-- Trend Section -->
-	  <div class="w3-row w3-padding-64" id="trend">
-	    <div class="w3-col l6 w3-padding-large">
+	  <div class="w3-row w3-padding-64" id="price-trend">
+	    <div class="w3-col l12 w3-padding-large">
 	      <h1 class="w3-center">Price Trend</h1><br>
 	      <h4>2015-2020</h4>
 	      <p class="w3-text-grey">Cities</p><br> 
 	    </div>
-	    
-<!-- 	    <div class="w3-col l6 w3-padding-large">
-	    </div> -->
+		  <div id="trend">
+	      	<select id="selectButton"></select>
+			<div id="my_dataviz">
+			    <svg id="linesvg" width="1200" height="400"></svg>
+			</div>
+	      </div>   
+
 	  </div>
 
 	  <hr>
 	  
 	  <!-- New Listing Section -->
 	  <div class="w3-row w3-padding-64" id="new-listing">
-	    <div class="w3-col l6 w3-padding-large">
+	    <div class="w3-col l12 w3-padding-large">
 	      <h1 class="w3-center">New Listing</h1><br>
 	      <h4>2015-2020</h4>
 	      <p class="w3-text-grey">Cities</p><br> 
 	    </div>
 	    
-<!-- 	    <div class="w3-col l6 w3-padding-large">
-	    </div> -->
+	    <div class="w3-col l12 w3-padding-large">
+	    	<div id="bar-chart"></div>
+	    	<div id="bar-chart-tool"></div>
+	    </div>
 	  </div>
 
 	  <hr>
@@ -117,8 +146,7 @@
 	    <div class="w3-col l6 w3-padding-large">
 	      <h1 class="w3-center">Sales Price and BitCoin</h1><br>
 	      <h4>2015-2020</h4>
-	      <p class="w3-text-grey">Cities</p><br> 
-			<script src="boxplot.js"></script>
+	      <p class="w3-text-grey">Cities</p><br> 			
 			<div id="bp"></div>
 	    </div>
 	   		<div id='bp-city'></div>
@@ -147,7 +175,7 @@
                     </svg>
                   </a>
 		</p>
-		<p class="w3-text-blue-grey w3-xlarge"><b>California, US</b></p>
+		<p class="w3-text-blue-grey w3-xlarge"><b>California, U.S.A.</b></p>
 		<p class="w3-text-blue-grey w3-xlarge"><b>Email: lhu@usfca.edu</b></p>
 	  </div>
 	  
@@ -159,6 +187,10 @@
 	  <p>updated at April 2021</p>
 	</footer>
 
+	<script src="housepriceline.js"></script>
+	<!-- <script src="boxplot.js"></script> -->
+	<script src="rank.js"></script>
+	<script src="bar.js"></script>
 
 </body>
 </html>
