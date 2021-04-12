@@ -8,9 +8,9 @@ var x, y
 
 
 // set up svg size
-var margin = {top: 100, right: 300, bottom: 500, left: 80},
-    width = 800 - margin.left - margin.right,
-    height = 800 - margin.top - margin.bottom;
+var margin = {top: 100, right: 300, bottom: 50, left: 100},
+    width = 1000 - margin.left - margin.right,
+    height = 450 - margin.top - margin.bottom;
 
 var svg = d3.select("#bar-chart")
     .append("svg")
@@ -29,6 +29,8 @@ var cfg = {
   xAxisMargin: 10,
   legendRightMargin: 0
 };
+
+var months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 
 draw_bar()
 // reference : https://d3-legend.susielu.com/
@@ -50,7 +52,7 @@ function draw_bar(){
         x = d3.scaleBand()
             .domain(d3.timeYear.range(...xTime.domain()))
             .rangeRound([margin.left, width - margin.right])
-            .padding(0.1)
+            .padding(0.8)
 
         // Add Y axis
         y = d3.scaleLinear()
@@ -66,18 +68,18 @@ function draw_bar(){
         //     .attr("fill", "black")
         //     .attr("font-size", "14px").attr("text-anchor", "middle")
         //     .attr("x", function(d){
-        //         return x(d.time)
+        //         return xTime(d.time)
         //     })
         //     .attr("y", function(d){
-        //       if (d.new_listing_count_mm > 0) {
-        //         return y(d.new_listing_count_mm) - 20;
+        //       if (+d.new_listing_count_mm > 0) {
+        //         return y(+d.new_listing_count_mm) - 20;
         //       }else {
-        //         return y(d.new_listing_count_mm) + 20;
+        //         return y(+d.new_listing_count_mm) + 20;
         //       }
         //     })
         //     .attr("dx", x.bandwidth()/2)
         //     .text(function(d){
-        //         return d.new_listing_count_mm;
+        //         return +d.new_listing_count_mm;
         //     });
 
         svg.append("g")
@@ -109,15 +111,16 @@ function draw_bar(){
           .attr("text-anchor", "end")
           .attr("x", width + margin.left - x.bandwidth())
           .attr("y", y(0) + 20)
-          .text("Date");
+          .text("2021-03");
 
-        // // Y axis label:
-        // svg.append("text")
-        //   .attr("text-anchor", "end")
-        //   .attr("transform", "rotate(-90)")
-        //   .attr("y", -margin.left + 10)
-        //   .attr("x", -margin.top - height/4)
-        //   .text("Monthly % Change of New Listing")
+        // Y axis label:
+        svg.append("text")
+          .attr("text-anchor", "end")
+          .attr("name", "begin-year")
+          // .attr("transform", "rotate(-90)")
+          .attr("y", height/5 * 4)
+          .attr("x", margin.left- 100)
+          .text("2017-07")
 
 
         var extent = d3.extent(table, d => +d.new_listing_count_mm)
@@ -162,7 +165,7 @@ function draw_bar(){
                div.transition()
                  .duration(200)
                  .style("opacity", .9);
-               div.html("% change: " + d.new_listing_count_mm + "<br/>" + "Time: " + d.time)
+               div.html("% change: " + d.new_listing_count_mm + "<br/>" + "Time: " + d.time.getFullYear() + "-" + months[d.time.getMonth()])
                  .style("left", (event.pageX + 30) + "px")
                  .style("top", (event.pageY - 28) + "px");
                })

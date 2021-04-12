@@ -60,6 +60,14 @@
     	margin: 10px;
     	border-bottom: 6px solid #DCDCDC;
     }
+    .data-link{
+    	 text-decoration: none;
+    }
+    .reports{
+    	font-size: 20px;
+    	color: darkseagreen;
+    	font-weight: bold;
+    }
 
 </style>
 <body>
@@ -73,6 +81,7 @@
 	      <a href="#price-trend" class="w3-bar-item w3-button">Price Trend</a>
 	      <a href="#new-listing" class="w3-bar-item w3-button">New Listing</a>
 	      <a href="#sale-bitcoin" class="w3-bar-item w3-button">Sale Price & BitCoin</a>
+	      <a href="#data" class="w3-bar-item w3-button">Data</a>
 	      <a href="#contact" class="w3-bar-item w3-button">Contact</a>
 	    </div>
 	  </div>
@@ -90,17 +99,21 @@
 
 	  <!-- About Section -->
 	  <div class="w3-row w3-padding-64" id="about">
-	    <div class="w3-col m6 w3-padding-large w3-hide-small">
+	    <div class="w3-col m6 w3-padding-large w3-hide-small" style="margin-top: 200px">
 	    	<div id="city-rank"></div>
 	     	<div id="city-rank-tool"></div>
 	    </div>
 
 	    <div class="w3-col m6 w3-padding-large">
-	      <h1 class="w3-center">About </h1><br>
-	      <h5 class="w3-center"> ranking 2021</h5>
-	      <p class="w3-large"> Housing has always been an essential concern for people the whole time. Ever since COVID19, most people have to stay home and do work remotely, therefore some of them move out of the city and find a less expensive place to stay. This draws my attention to the housing market in the San Francisco bay area. There are many cities in the bay area, so in order to smoothly start this final project, I would choose 5 of the cities listed on
-	      	<span class="w3-tag w3-light-grey"><a href="https://www.niche.com/places-to-live/search/best-cities/m/san-francisco-metro-area/" target="_blank">Niche.com</a></span>  “2021 Best Cities to Live in the San Francisco Bay Area'' as my target cities for analysis. In addition, Bitcoin has been a hot issue since 2017, especially those dramatic changes in recent months. I would like to bring it together with this analysis and see if there is any connection between Bitcoin and the housing market in the bay area. The time range for this project will be set between 2015 and 2020.</p>
-	      <p class="w3-large w3-text-grey w3-hide-medium">Cities in bay area</p>
+	      <h1 class="w3-center">About</h1><br>
+	      <div class="w3-row">
+			<a class="reports" target="blank" href="https://www.dropbox.com/s/ylkxrhkazyn50pf/Data%20Visualization%20Final%20Proposal.pdf?dl=0"> Project Proposal</a>
+			<span style="padding: 20px"></span>
+			<a class="reports" target="blank" href="https://www.dropbox.com/s/85fuecv70cytbjz/DV%20Alpha%20Release%20Report.pdf?dl=0">Alpha Release Report</a>
+	      </div>
+
+	      <p class="w3-large w3-text-grey w3-hide-medium">Housing has always been an essential concern for people the whole time. Ever since COVID19, most people have to stay home and do work remotely, therefore some of them move out of the city and find a less expensive place to stay. This project aims to analyze the recent housing market in the San Francisco bay area. Some of the cities listed on
+	      	<span class="w3-tag w3-light-grey"><a href="https://www.niche.com/places-to-live/search/best-cities/m/san-francisco-metro-area/" target="_blank">Niche.com</a></span>  “2021 Best Cities/Suburbs to Live in the San Francisco Bay Area'' were chosen as the target cities for this project. In this project, I then analyze if the number of bedrooms would affect the house value in long term in each of these cities. And then I also check on the monthly percentage change of new inventory in the bay area to seek potential patterns of the market. In addition, Bitcoin has been a hot issue since 2017, especially those dramatic changes in recent months. I bring it together with this analysis and see if there is any connection between Bitcoin and the housing market in the bay area.</p>
 
 	    </div>
 	  </div>
@@ -112,7 +125,7 @@
 	    <div class="w3-col l12 w3-padding-large">
 	      <h1 class="w3-center">Price Trend</h1><br>
 	      <h4>2015-2020</h4>
-	      <p class="w3-text-grey">Cities</p><br> 
+	      <p class="w3-text-grey">House with Number of Bedrooms and Price Change among Cities</p><br> 
 	    </div>
 		  <div id="trend">
 	      	<select id="selectButton"></select>
@@ -129,8 +142,7 @@
 	  <div class="w3-row w3-padding-64" id="new-listing">
 	    <div class="w3-col l12 w3-padding-large">
 	      <h1 class="w3-center">New Listing</h1><br>
-	      <h4>2015-2020</h4>
-	      <p class="w3-text-grey">Cities</p><br> 
+	      <p class="w3-text-grey">Monthly Percentage Change of New Listing Count in Bay Area</p><br> 
 	    </div>
 	    
 	    <div class="w3-col l12 w3-padding-large">
@@ -152,6 +164,21 @@
 	   		<div id='bp-city'></div>
 <!-- 	    <div class="w3-col l6 w3-padding-large">
 	    </div> -->
+	  </div>
+
+	  <hr>
+	  <!-- Data Source Section -->
+	  <div class="w3-container w3-padding-64" id="data">
+	   <div class="w3-col l6 w3-padding-large">
+	      <h1 class="w3-center">Data Sources</h1><br>
+		  	<ul class="w3-ul w3-hoverable"> 
+			  <a class="data-link" target="blank" href="https://www.zillow.com/research/data/"><li>Zillow</li></a>
+			  <a class="data-link" target="blank" href="https://www.kaggle.com/sudalairajkumar/cryptocurrencypricehistory"><li>Kaggle</li></a>
+			  <a class="data-link" target="blank" href="https://www.redfin.com/news/data-center/"><li>Redfin</li></a>
+			  <a class="data-link" target="blank" href="https://www.niche.com/places-to-live/search/best-cities/m/san-francisco-metro-area/"><li>Niche</li></a>
+			  <a class="data-link" target="blank" href="https://www.realtor.com/research/data/"><li>Relator</li></a>
+			</ul>
+		</div>
 	  </div>
 
 
@@ -178,6 +205,8 @@
 		<p class="w3-text-blue-grey w3-xlarge"><b>California, U.S.A.</b></p>
 		<p class="w3-text-blue-grey w3-xlarge"><b>Email: lhu@usfca.edu</b></p>
 	  </div>
+
+
 	  
 	<!-- End page content -->
 	</div>
