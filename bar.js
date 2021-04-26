@@ -56,6 +56,7 @@ function draw_bar(areagroup){
         if(d.area == areagroup){
             var tmp = d.time
             d.time = new Date(`${tmp[0]}${tmp[1]}${tmp[2]}${tmp[3]}-${tmp[4]}${tmp[5]}-28`)
+            d.new_listing_count_mm = +d.new_listing_count_mm * 100
             return d
         }
     })
@@ -101,28 +102,24 @@ function draw_bar(areagroup){
         svg.append("g")
                 .attr('name', 'x-axis')
                 .attr("transform", "translate(0," + height + ")")
-                // .attr("transform", "translate(0," + (y(0)) + ")")
-                // .append("line")
-                // .attr("x1", 0)
-                // .attr("x2", width)
                 .call(d3.axisBottom(xTime).tickSizeOuter(0));
 
         svg.append("g")
-            .call(d3.axisLeft(y).tickSize(-width*1).ticks(10));
+            .call(d3.axisLeft(y).tickSize(-width*1.05).ticks(10));
 
         svg.selectAll(".tick line").attr("stroke", "lightgray")
-        var labels = svg.append("g").attr("class", "labels");
-        labels.selectAll("text")
-          .data(table)
-          .enter()
-          .append("text")
-          .attr("class", "bar-label")
-          .attr("x", function(d) {return x(d.time);})
-          .attr("y", y(0))
-          .attr("dx", x.bandwidth()-20)
-          .attr("dy", function(d) {return d.new_listing_count_mm < 0 ? - cfg.labelMargin :  cfg.labelMargin;})
-          .attr("text-anchor", "end")
-          .text(function(d) {return d.state;})
+        // var labels = svg.append("g").attr("class", "labels");
+        // labels.selectAll("text")
+        //   .data(table)
+        //   .enter()
+        //   .append("text")
+        //   .attr("class", "bar-label")
+        //   .attr("x", function(d) {return x(d.time);})
+        //   .attr("y", y(0))
+        //   .attr("dx", x.bandwidth()-20)
+        //   .attr("dy", function(d) {return d.new_listing_count_mm < 0 ? - cfg.labelMargin :  cfg.labelMargin;})
+        //   .attr("text-anchor", "end")
+        //   .text(function(d) {return d.state;})
 
 
         var extent = d3.extent(table, d => +d.new_listing_count_mm)
@@ -167,7 +164,7 @@ function draw_bar(areagroup){
                div.transition()
                  .duration(200)
                  .style("opacity", .9);
-               div.html("% change: " + d.new_listing_count_mm + "<br/>" + "Time: " + d.time.getFullYear() + "-" + months[d.time.getMonth()])
+               div.html("Change: " + d.new_listing_count_mm.toFixed(2) + "% <br/>" + "Time: " + d.time.getFullYear() + "-" + months[d.time.getMonth()])
                  .style("left", (event.pageX + 30) + "px")
                  .style("top", (event.pageY - 28) + "px");
                })
@@ -177,7 +174,14 @@ function draw_bar(areagroup){
                  .style("opacity", 0);
                });
 
-
+        // Y axis label:
+        svg.append("text")
+          .attr("text-anchor", "end")
+          .attr("transform", "rotate(-90)")
+          .attr("y", -margin.left + 50)
+          .attr("x", margin.top - 100)
+          .text("Monthly Amount of New Listing Changed (%)")
+          .style("font-size", '12px')
 
         svg.append("g")
             .attr("transform", "translate(" + (width + margin.left) + ",10)")

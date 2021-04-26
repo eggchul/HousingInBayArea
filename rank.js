@@ -3,7 +3,7 @@
 //list out shared data
 var table
 var category = ["Best Cities to Live in America",
-                "Best Suburbs to Live in san Francisco Bay Area"]
+                "Best Suburbs to Live in San Francisco Bay Area"]
 // set up svg size
 var margin = {top: 30, right: 200, bottom: 70, left: 80},
     width = 500 - margin.left - margin.right,

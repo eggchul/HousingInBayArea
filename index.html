@@ -85,7 +85,7 @@
 	      <a href="#about" class="w3-bar-item w3-button">About</a>
 	      <a href="#price-trend" class="w3-bar-item w3-button">Price Trend</a>
 	      <a href="#new-listing" class="w3-bar-item w3-button">New Listing</a>
-	      <a href="#sale-bitcoin" class="w3-bar-item w3-button">Pending Listing & BitCoin</a>
+	      <a href="#sale-bitcoin" class="w3-bar-item w3-button">Pending Listing & Bitcoin</a>
 	      <a href="#data" class="w3-bar-item w3-button">Data</a>
 	      <a href="#contact" class="w3-bar-item w3-button">Contact</a>
 	    </div>
@@ -115,6 +115,8 @@
 			<a class="reports" target="blank" href="https://www.dropbox.com/s/ylkxrhkazyn50pf/Data%20Visualization%20Final%20Proposal.pdf?dl=0"> Project Proposal</a>
 			<span style="padding: 20px"></span>
 			<a class="reports" target="blank" href="https://www.dropbox.com/s/85fuecv70cytbjz/DV%20Alpha%20Release%20Report.pdf?dl=0">Alpha Release Report</a>
+			<a class="reports" target="blank" href="https://www.dropbox.com/s/ppy0ffzgytx4tvk/DV%20Beta%20Release%20Report.pdf?dl=0">Beta Release Report</a>
+			
 	      </div>
 
 	      <p class="w3-large w3-text-grey w3-hide-medium">Housing has always been an essential concern for people the whole time. Ever since COVID19, most people have to stay home and do work remotely, therefore some of them move out of the city and find a less expensive place to stay. This project aims to analyze the recent housing market in the San Francisco bay area. Some of the cities listed on
@@ -136,7 +138,7 @@
 			<div id="my_dataviz">
 			    <svg id="linesvg" width="1100" height="400"></svg>
 			</div>
-			<p class="w3-text-grey" style="text-align: center">The above figure shows the monthly price change of house with different number of bedrooms of the selected city between 2015 and 2020</p>
+			<p class="w3-text-grey" style="text-align: center">The above figure(Figure 2) shows the monthly price change of house with different number of bedrooms of the selected city between 2015 and 2020</p>
 		</div>   
 	  </div>
 
@@ -146,13 +148,14 @@
 	  <div class="w3-row w3-padding-64" id="new-listing">
 	    <div class="w3-col l12 w3-padding-large">
 	      <h1 class="w3-center">New Listing</h1><br>
-	      <p class="w3-text-grey">Monthly Percentage Change of New Listing Count in Bay Area</p><br> 
+	      <p class="w3-text-grey">When we check on the data from <a class="data-link" target="blank" href="https://www.realtor.com/research/data/">Relator</a>, we could see that January has been the month that when people will sell their houses. However there is a significant change in 2019 and 2020. The inventory amount of new listing increaed in a sudden around 130% in Jan, 2019 and around 160% in Jan, 2020. </p>
 	    </div>
 	    
 	    <div class="w3-col l12 w3-padding-large">
 	    	<select id="selectButton2"></select>
 	    	<div id="bar-chart"></div>
 	    	<div id="bar-chart-tool"></div>
+	    	<p class="w3-text-grey">Figure 3 above shows the monthly amount of new listing inventory change in percentage in the bay area.</p><br>
 	    </div>
 	  </div>
 
@@ -160,15 +163,13 @@
 	  
 	  <!-- Pending Listing and BitCoin Section -->
 	  <div class="w3-row w3-padding-64" id="sale-bitcoin">
-	    <div class="w3-col l6 w3-padding-large">
-	      <h1 class="w3-center">Pending Listing and BitCoin</h1><br>			
+	    <div class="w3-col l12 w3-padding-large">
+	      <h1 class="w3-center">Pending Listing and Bitcoin</h1>
+	      <p class="w3-text-grey">Bitcoin is one of the most popular cryptocurrency in the world. It could be traded 24 hours a day. In here, the daily closing price is selected as our sample and used a boxplot to represent a montly daily percentage change in ratio. We also check on the pending listing amount change ratio monlty for the listed two areas.</p>			
 			<div id="bp"></div>
 	    </div>
 	   		<div id='bp-city'></div>
-
-	    <div class="w3-col l12 w3-padding-large">
-	    	<p class="w3-text-grey">Cities</p><br> 
-	    </div>
+	   		<p class="w3-text-grey">Figure 4 above shows the montly close price ratio change of Bitcoin in boxplot and the monthly ratio change of pending listing in the two listed areas.</p>
 	  </div>
 
 	  <hr>

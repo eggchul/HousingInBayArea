@@ -4,7 +4,8 @@ var margin = {top: 30, right: 30, bottom: 70, left: 80},
     height = 600 - margin.top - margin.bottom;
 var months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 var area = ["san francisco-oakland-hayward, ca",
-            "san jose-sunnyvale-santa clara, ca"]
+            "san jose-sunnyvale-santa clara, ca",
+            'bitcoin']
 
 var div = d3.select("#bp-city").append("div")
     .attr("class", "tooltip")
@@ -19,6 +20,7 @@ var svg = d3.select("#bp")
 var colorMap = {
   'san francisco-oakland-hayward, ca':"#578dff",
   'san jose-sunnyvale-santa clara, ca': "#f72830",
+  'bitcoin': "darkseagreen"
 }
 
 
@@ -127,7 +129,7 @@ function ready([listing, bitcoin]) {
           .attr("transform", "rotate(-90)")
           .attr("y", -margin.left + 15)
           .attr("x", -margin.top - height/4)
-          .text("Monthly Value Changed  (%)")
+          .text("Monthly Value Changed Ratio")
 
 
         svg.selectAll("vertLines")
@@ -323,9 +325,9 @@ function ready([listing, bitcoin]) {
             .append("text")
             .attr("fill", "black")
             .attr("font-size", "14px")
-            .attr("text-anchor", "middle")
+            .attr("text-anchor", "letf")
             .attr("y", function(d, i) { return margin.top + i * 25 + 5})
-            .attr("x", function (d) { return width - 100})
+            .attr("x", function (d) { return width - 220})
             .attr("dx", 5)
             .text(function(d){ return d})
 
