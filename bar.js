@@ -6,7 +6,13 @@ var area = ["san francisco-oakland-hayward, ca",
             "san jose-sunnyvale-santa clara, ca"]
 var x, y
 
-
+var area_selection_line =d3.select("#selectButton2")
+    .selectAll('myOptions')
+    .data(area)
+    .enter()
+    .append('option')
+    .text(function (d) { return d; }) // text showed in the menu
+    .attr("value", function (d) { return d; }) 
 // set up svg size
 var margin = {top: 100, right: 300, bottom: 50, left: 100},
     width = 1000 - margin.left - margin.right,
@@ -18,6 +24,7 @@ var svg = d3.select("#bar-chart")
     .attr("height", height + margin.top + margin.bottom)
     // .style("background-color", 'lightyellow')
     .append("g")
+    .attr("id", 'wrapper')
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 var div = d3.select("#bar-chart-tool").append("div")
@@ -32,12 +39,21 @@ var cfg = {
 
 var months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 
-draw_bar()
+draw_bar(area[0])
 // reference : https://d3-legend.susielu.com/
 // https://codepen.io/jchowe/pen/WLNXqB
-function draw_bar(){
+function update(selectedGroup) {
+    d3.selectAll("#wrapper").html("");
+    draw_bar(selectedGroup)
+}
+
+d3.select("#selectButton2").on("change", function(d) {
+    var selectedOption = d3.select(this).property("value")
+    update(selectedOption)
+})
+function draw_bar(areagroup){
     d3.csv("./area_listing.csv", function(d) {
-        if(d.area == area[0]){
+        if(d.area == areagroup){
             var tmp = d.time
             d.time = new Date(`${tmp[0]}${tmp[1]}${tmp[2]}${tmp[3]}-${tmp[4]}${tmp[5]}-28`)
             return d
@@ -84,10 +100,11 @@ function draw_bar(){
 
         svg.append("g")
                 .attr('name', 'x-axis')
-                .attr("transform", "translate(0," + (y(0)) + ")")
-                .append("line")
-                .attr("x1", 0)
-                .attr("x2", width)
+                .attr("transform", "translate(0," + height + ")")
+                // .attr("transform", "translate(0," + (y(0)) + ")")
+                // .append("line")
+                // .attr("x1", 0)
+                // .attr("x2", width)
                 .call(d3.axisBottom(xTime).tickSizeOuter(0));
 
         svg.append("g")
@@ -106,21 +123,6 @@ function draw_bar(){
           .attr("dy", function(d) {return d.new_listing_count_mm < 0 ? - cfg.labelMargin :  cfg.labelMargin;})
           .attr("text-anchor", "end")
           .text(function(d) {return d.state;})
-        // Add X axis label:
-        svg.append("text")
-          .attr("text-anchor", "end")
-          .attr("x", width + margin.left - x.bandwidth())
-          .attr("y", y(0) + 20)
-          .text("2021-03");
-
-        // Y axis label:
-        svg.append("text")
-          .attr("text-anchor", "end")
-          .attr("name", "begin-year")
-          // .attr("transform", "rotate(-90)")
-          .attr("y", height/5 * 4)
-          .attr("x", margin.left- 100)
-          .text("2017-07")
 
 
         var extent = d3.extent(table, d => +d.new_listing_count_mm)

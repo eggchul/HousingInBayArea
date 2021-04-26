@@ -19,6 +19,10 @@ var div = d3.select("#city-rank-tool").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
+var detail =  d3.select("#city-rank").append("div")
+    .attr("class", "about")
+    .style("opacity", 0);
+
 var z = d3.scaleOrdinal(d3.schemeCategory10);
 
 // reference : https://www.d3-graph-gallery.com/graph/line_basic.html
@@ -51,9 +55,13 @@ function draw_rank(rankType){
 
 
           svg.append("g")
-              .call(d3.axisLeft(y).tickSize(-width*1));
+              .attr("class", "grid")
+              .call(d3.axisLeft(y).tickSize(-width*1).tickFormat(""));
 
           svg.selectAll(".tick line").attr("stroke", "lightgray")
+
+          svg.append("g")
+            .call(d3.axisLeft(y));
 
           // Add X axis label:
           svg.append("text")
@@ -92,9 +100,16 @@ function draw_rank(rankType){
                  div.html("City: " + d.name + "<br/>" + "Rank: " + d.rank )
                    .style("left", (event.pageX + 30) + "px")
                    .style("top", (event.pageY - 28) + "px");
+                 detail.transition()
+                   .duration(200)
+                   .style("opacity", .9);
+                 detail.html(`<h4>${d.name}</h4> <h5> NO.${d.rank} </h5> <p>${d.description}</p>`)
                  })
                .on("mouseout", function(d) {
                  div.transition()
+                   .duration(500)
+                   .style("opacity", 0);
+                  detail.transition()
                    .duration(500)
                    .style("opacity", 0);
                  });
@@ -107,20 +122,32 @@ function draw_rank(rankType){
 
           svg.append('g')
               .selectAll("codeLegend")
-              .data(table.map(x => x.name))
+              .data(table)
               .enter()
               .append("circle")
               .attr("cx", function (d) { return width + margin.left} )
               .attr("cy", function (d, i) { return margin.top + i * 25} )
               .attr("r", 10)
               .style("fill", function (d) {
-                return z(d)
+                return z(d.name)
               })
               .style("opacity", 0.8)
+              .on("mouseover", function(event,d) {
+                detail.transition()
+                  .duration(200)
+                  .style("opacity", .9);
+                detail.html(`<h4>${d.name}</h4> <h5> NO.${d.rank} </h5> <p>${d.description}</p>`)
+              })
+              .on("mouseout", function(d) {
+                detail.transition()
+                  .duration(500)
+                  .style("opacity", 0);
+              });
+
 
           svg.append('g')
               .selectAll("text")
-              .data(table.map(x => x.name))
+              .data(table)
               .enter()
               .append("text")
               .attr("fill", "black")
@@ -128,8 +155,18 @@ function draw_rank(rankType){
               .attr("y", function(d, i) { return margin.top + i * 25 + 5})
               .attr("x", function (d) { return width + margin.left + 5})
               .attr("dx", 5)
-              .text(function(d){ return d})
-
+              .text(function(d){ return d.name})
+              .on("mouseover", function(event,d) {
+                detail.transition()
+                  .duration(200)
+                  .style("opacity", .9);
+                detail.html(`<h4>${d.name}</h4> <h5> NO.${d.rank} </h5> <p>${d.description}</p>`)
+              })
+              .on("mouseout", function(d) {
+                detail.transition()
+                  .duration(500)
+                  .style("opacity", 0);
+              });
       }) 
 }
 

@@ -57,6 +57,7 @@ function draw_line_chart(city){
     d3.select('#my_dataviz svg').selectAll('text').remove();
     svg.select('#my_dataviz svg g').select('#x_axis').remove();
     svg.select('#my_dataviz svg g').select('#y_axis').remove();
+    svg.select('#my_dataviz svg g').select('.grid').remove();
 
     d3.csv("house_type_and_price.csv", function(d) {
         if(d.city === city){
@@ -87,7 +88,7 @@ function draw_line_chart(city){
                 return {
                     id: id,
                     values: data.map(function(d) {
-                        return {date: d.date, price: +d[id]};
+                        return {date: d.date, price: +d[id], id: id};
                     })
                 };
             });
@@ -97,7 +98,7 @@ function draw_line_chart(city){
             y.domain([
                 d3.min(types, function(c) { return d3.min(c.values, function(d) { return d.price; }); }),
                 d3.max(types, function(c) { return d3.max(c.values, function(d) { return d.price; }); })
-            ]);
+            ]).nice();
 
             z.domain(types.map(function(c) { return c.id; }));
 
@@ -106,6 +107,11 @@ function draw_line_chart(city){
                 .attr("id", 'x_axis')
                 .attr("transform", "translate(0," + height + ")")
                 .call(d3.axisBottom(x));
+
+            g.append("g")         
+              .attr("class", "grid")
+              .call(d3.axisLeft(y).tickSize(-width + margin.right).tickFormat(""))
+              svg.selectAll(".tick line").attr("stroke", "lightgray")
 
             g.append("g")
                 .attr("class", "axis axis--y")
@@ -129,36 +135,39 @@ function draw_line_chart(city){
                 var attrs = elem.srcElement.attributes;
                 let id = attrs['data-id'].value;
                 let path = city.select(`[id="${id}"]`);
+                let dots = city.select(`[id="dots-${id}"]`).selectAll('circle');
                 if (path.attr('visibility') == 'hidden') {
                     return;
                 }
                 city.selectAll('.line').style('stroke', d => {
                     return 'lightgrey';
                 });
+                city.selectAll("circle").style('fill', d => {
+                    return 'lightgrey';
+                });
                 path.style('stroke', z(elem.srcElement['id']));
+                dots.style('fill', z(elem.srcElement['id']));
 
             }
 
-            // function hoverOnLine(elem) {
-            //     console.log(elem)
-            //     var d = elem.view.d
-            //     var attrs = elem.srcElement.attributes;
-            //     let id = attrs['data-id'].value;
-            //     let path = city.select(`[id="${id}"]`);
-            //     if (path.attr('visibility') == 'hidden') {
-            //         return;
-            //     }
-            //     city.selectAll('.line').style('stroke', d => {
-            //         return 'lightgrey';
-            //     });
-            //     path.style('stroke', z(elem.srcElement['id']));
-            //     div.transition()
-            //         .duration(200)
-            //         .style("opacity", .9);
-            //     div.html("City: " + d.city + "<br/>" + "Bedroom: " + d.house_type + "<br/>" + "Price: " + d.price + "<br/>" + "Date: " + d.time)
-            //         .style("left", (event.pageX) + "px")
-            //         .style("top", (event.pageY - 28) + "px");
-            // }
+            function hoverOnLine(elem) {
+                var d = elem.view.d
+                var attrs = elem.srcElement.attributes;
+                let id = attrs['data-id'].value;
+                let path = city.select(`[id="${id}"]`);
+                let dots = city.select(`[id="dots-${id}"]`).selectAll('circle');
+                if (path.attr('visibility') == 'hidden') {
+                    return;
+                }
+                city.selectAll('.line').style('stroke', d => {
+                    return 'lightgrey';
+                });
+                city.selectAll('circle').style('fill', d => {
+                    return 'lightgrey';
+                });
+                path.style('stroke', z(elem.srcElement['id']));
+                dots.style('fill', z(elem.srcElement['id']));
+            }
 
             function exit(elem) {
                 var attrs = elem.srcElement.attributes;
@@ -170,20 +179,27 @@ function draw_line_chart(city){
                 city.selectAll('.line').style('stroke', d => {
                     return z(d.id)
                 });
+                city.selectAll('circle').style('fill', d => {
+                    return z(d.id)
+                });
                 div.transition()
-                    .duration(500)
-                    .style("opacity", 0);
+                        .duration(500)
+                        .style("opacity", 0);
+                    
             }
 
             function click(elem) {
                 var attrs = elem.srcElement.attributes;
                 let id = attrs['data-id'].value;
                 let path = city.select(`[id="${id}"]`);
+                let dots = city.select(`[id="dots-${id}"]`).selectAll('circle');
                 if (path.attr('visibility') == 'hidden') {
                     path.attr('visibility', 'visible');
+                    dots.attr('visibility', 'visible');
                 } else {
                     exit(elem);
                     path.attr('visibility', 'hidden');
+                    dots.attr('visibility', 'hidden');
                 }
             }
 
@@ -194,6 +210,7 @@ function draw_line_chart(city){
             function zoomed(event) {
                 const xz = event.transform.rescaleX(x);
                 city.selectAll('.line').attr("d", function(d) { return makeLine(xz)(d.values); })
+                city.selectAll('circle').attr("cx", function (d) { return xz(d.date) } )
                 x_axis.call(xAxis, xz);
 
             }
@@ -218,7 +235,34 @@ function draw_line_chart(city){
                 .attr("data-id", d => d.id.substring(0, 3).toUpperCase())
                 .attr("visibility", "visible")
                 .style("stroke", function(d) { return z(d.id); })
-                // .on("mouseover", hoverOnLine)
+                .style("stroke-width", function(d) { return 3; })
+                .on("mouseover", hoverOnLine)
+                .on("mouseout", exit);
+
+            city.append('g')
+                .attr("id", d => `dots-${d.id.substring(0, 3).toUpperCase()}`)
+                .selectAll("circle")
+                .data(d => d.values)
+                .enter()
+                .append("circle")
+                .attr("data-id", d => d.id.substring(0, 3).toUpperCase())
+                .attr("id", d => d.id.substring(0, 3).toUpperCase())
+                .attr("cx", function (d) { return x(d.date) } )
+                .attr("cy", function (d) { return y(d.price); } )
+                .attr("r", 4)
+                .style("fill", function(d){
+                  return z(d.id)
+                })
+                .style("opacity", 0.8)
+                .on("mouseover", function(event, d) {
+                    div.transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                    div.html("Bedroom: " + d.id + "<br/>" + "Price: " + (d.price/1000000).toFixed(3) + "m <br/>" + "Date: " + d.date.toLocaleDateString())
+                        .style("left", (event.pageX) + "px")
+                        .style("top", (event.pageY - 28) + "px");
+                    hoverOnLine(event);
+                })
                 .on("mouseout", exit);
 
             svg.selectAll(".label")
@@ -227,17 +271,28 @@ function draw_line_chart(city){
                 .append("text")
                 .datum(function(d) { return {id: d.id, value: d.values[d.values.length - 1]}; })
                 .attr("class", "label")
-                .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.price) + ")"; })
-                .attr("x", 100)
-                .attr("y", 5)
-                .attr("dy", "0.35em")
+                .attr("y", function(d, i) { return margin.top + i * 25 + 5})
+                .attr("x", function (d) { return width + 35})
                 .attr("id", d => d.id)
                 .attr("data-id", d => d.id.substring(0, 3).toUpperCase())
-                .style("font", "10px sans-serif")
+                .style("font", "16px sans-serif")
                 .text(function(d) { return d.id + ' bedroom'; })
                 .on('click', click)
                 .on("mouseover", hover)
                 .on("mouseout", exit)
+
+            svg.append('g')
+              .selectAll("codeLegend")
+              .data(types)
+              .enter()
+              .append("circle")
+              .attr("cx", function (d) { return width + 20} )
+              .attr("cy", function (d, i) { return margin.top + i * 25} )
+              .attr("r", 10)
+              .style("fill", function (d) {
+                return z(d.id)
+              })
+              .style("opacity", 0.8)
         })
 }
 })()

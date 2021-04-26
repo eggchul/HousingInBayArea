@@ -9,6 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
 	<script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="icon" href="logo.png">
 </head>
 
 <style type="text/css">
@@ -18,15 +19,15 @@
 
 	div.tooltip {
 	    position: absolute;
-	    text-align: center;
+	    text-align: left;
 	    padding: 2px;
-	    font: 12px sans-serif;
-	    background: lightsteelblue;
+	    font: 16px sans-serif;
+	    color: white;
+	    background: linear-gradient(to bottom right, #FF69B4, #FFA500);
 	    border: 0px;
-	    border-radius: 8px;
+	    border-radius: 4px;
 	    pointer-events: none;
 	}
-
 	.line {
 	  fill: none;
 	  stroke: steelblue;
@@ -69,6 +70,10 @@
     	font-weight: bold;
     }
 
+	.grid path {
+  		stroke-width: 0;
+	}
+
 </style>
 <body>
 <!-- Navbar (sit on top) -->
@@ -80,7 +85,7 @@
 	      <a href="#about" class="w3-bar-item w3-button">About</a>
 	      <a href="#price-trend" class="w3-bar-item w3-button">Price Trend</a>
 	      <a href="#new-listing" class="w3-bar-item w3-button">New Listing</a>
-	      <a href="#sale-bitcoin" class="w3-bar-item w3-button">Sale Price & BitCoin</a>
+	      <a href="#sale-bitcoin" class="w3-bar-item w3-button">Pending Listing & BitCoin</a>
 	      <a href="#data" class="w3-bar-item w3-button">Data</a>
 	      <a href="#contact" class="w3-bar-item w3-button">Contact</a>
 	    </div>
@@ -99,7 +104,7 @@
 
 	  <!-- About Section -->
 	  <div class="w3-row w3-padding-64" id="about">
-	    <div class="w3-col m6 w3-padding-large w3-hide-small" style="margin-top: 200px">
+	    <div class="w3-col m6 w3-padding-large w3-hide-small" style="margin-top: 100px">
 	    	<div id="city-rank"></div>
 	     	<div id="city-rank-tool"></div>
 	    </div>
@@ -123,17 +128,16 @@
 	  <!-- Trend Section -->
 	  <div class="w3-row w3-padding-64" id="price-trend">
 	    <div class="w3-col l12 w3-padding-large">
-	      <h1 class="w3-center">Price Trend</h1><br>
-	      <h4>2015-2020</h4>
-	      <p class="w3-text-grey">House with Number of Bedrooms and Price Change among Cities</p><br> 
+	      <h1 class="w3-center">Price Trend</h1>
+	      <p class="w3-text-grey">Generally, the sales price of a house with more bedrooms will increase faster then a house with less bedrooms. However, there is a turn in 2020. If you navigate with the interactive chart below, you could find that for cities like San Francisco and Foster City, the value of a 5 bedroom house is dropping since 2020.</p><br>
 	    </div>
-		  <div id="trend">
-	      	<select id="selectButton"></select>
+		<div id="trend">
+			<select id="selectButton"></select>
 			<div id="my_dataviz">
-			    <svg id="linesvg" width="1200" height="400"></svg>
+			    <svg id="linesvg" width="1100" height="400"></svg>
 			</div>
-	      </div>   
-
+			<p class="w3-text-grey" style="text-align: center">The above figure shows the monthly price change of house with different number of bedrooms of the selected city between 2015 and 2020</p>
+		</div>   
 	  </div>
 
 	  <hr>
@@ -146,6 +150,7 @@
 	    </div>
 	    
 	    <div class="w3-col l12 w3-padding-large">
+	    	<select id="selectButton2"></select>
 	    	<div id="bar-chart"></div>
 	    	<div id="bar-chart-tool"></div>
 	    </div>
@@ -153,17 +158,17 @@
 
 	  <hr>
 	  
-	  <!-- Sales Price and BitCoin Section -->
+	  <!-- Pending Listing and BitCoin Section -->
 	  <div class="w3-row w3-padding-64" id="sale-bitcoin">
 	    <div class="w3-col l6 w3-padding-large">
-	      <h1 class="w3-center">Sales Price and BitCoin</h1><br>
-	      <h4>2015-2020</h4>
-	      <p class="w3-text-grey">Cities</p><br> 			
+	      <h1 class="w3-center">Pending Listing and BitCoin</h1><br>			
 			<div id="bp"></div>
 	    </div>
 	   		<div id='bp-city'></div>
-<!-- 	    <div class="w3-col l6 w3-padding-large">
-	    </div> -->
+
+	    <div class="w3-col l12 w3-padding-large">
+	    	<p class="w3-text-grey">Cities</p><br> 
+	    </div>
 	  </div>
 
 	  <hr>
@@ -217,7 +222,7 @@
 	</footer>
 
 	<script src="housepriceline.js"></script>
-	<!-- <script src="boxplot.js"></script> -->
+	<script src="boxplot.js"></script>
 	<script src="rank.js"></script>
 	<script src="bar.js"></script>
 
