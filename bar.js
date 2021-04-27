@@ -56,7 +56,7 @@ function draw_bar(areagroup){
         if(d.area == areagroup){
             var tmp = d.time
             d.time = new Date(`${tmp[0]}${tmp[1]}${tmp[2]}${tmp[3]}-${tmp[4]}${tmp[5]}-28`)
-            d.new_listing_count_mm = +d.new_listing_count_mm * 100
+            d.new_listing_count_mm = Number(d.new_listing_count_mm) * 100
             return d
         }
     })
@@ -126,14 +126,16 @@ function draw_bar(areagroup){
 
         //legend
         var colorScale = d3.scaleDiverging()
+        // .domain([-60, 0,])
+            .domain([extent[0], 0, extent[1]]).nice()
             .interpolator(d3.interpolateRdBu)
-            // .domain([d3.min(table, d=> +d.new_listing_count_mm), 0 , d3.max(table, d=> +d.new_listing_count_mm)]).nice();
-            .domain([extent[0], 0, extent[1]])
 
         var legend = d3.legendColor()
             .title("% Changed Comparing to Previous Month")
             .titleWidth(200)
-            .scale(colorScale);
+            .labelFormat(d3.format(".0f"))
+            .scale(colorScale)
+            .cells([-60, -30, 0, 30, 60, 90, 120, 150]);
 
 
 
