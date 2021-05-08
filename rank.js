@@ -6,8 +6,8 @@ var category = ["Best Cities to Live in America",
                 "Best Suburbs to Live in San Francisco Bay Area"]
 // set up svg size
 var margin = {top: 30, right: 160, bottom: 70, left: 90},
-    width = 500 - margin.left - margin.right,
-    height = 300 - margin.top - margin.bottom;
+    width = 550 - margin.left - margin.right,
+    height = 350 - margin.top - margin.bottom;
 
 var svg = d3.select("#city-rank")
     .append("svg")

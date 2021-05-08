@@ -146,8 +146,7 @@ function draw_line_chart(city){
                     return 'lightgrey';
                 });
                 path.style('stroke', z(elem.srcElement['id']));
-                dots.style('fill', z(elem.srcElement['id']));
-
+                dots.style('fill', z(elem.srcElement['id']));  
             }
 
             function hoverOnLine(elem) {
@@ -167,6 +166,7 @@ function draw_line_chart(city){
                 });
                 path.style('stroke', z(elem.srcElement['id']));
                 dots.style('fill', z(elem.srcElement['id']));
+                dots.raise();
             }
 
             function exit(elem) {

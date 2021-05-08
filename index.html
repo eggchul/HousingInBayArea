@@ -63,16 +63,33 @@
     	border-bottom: 6px solid #DCDCDC;
     }
     .data-link{
-    	 text-decoration: none;
+    	/*text-decoration: none;*/
+    	font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+    	font-size: 24px;
+    	font-weight: bold;
+    	color: #1E90FF;
     }
     .reports{
-    	font-size: 20px;
-    	color: darkseagreen;
+    	font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+    	font-size: 24px;
     	font-weight: bold;
+    	color: #1E90FF;
     }
-
+    .in-text-link{
+    	color: #1E90FF;
+    }
 	.grid path {
   		stroke-width: 0;
+	}
+	.d-and-r{
+		display: flex; 
+		justify-content: space-around;
+	}
+	.bgimg {
+	  background-position: center;
+	  background-size: cover;
+	  background-image: url("fostercity.jpg");
+	  min-height: 75%;
 	}
 
 </style>
@@ -87,24 +104,22 @@
 	      <a href="#price-trend" class="w3-bar-item w3-button">Price Trend</a>
 	      <a href="#new-listing" class="w3-bar-item w3-button">New Listing</a>
 	      <a href="#sale-bitcoin" class="w3-bar-item w3-button">Pending Listing & Bitcoin</a>
-	      <a href="#data" class="w3-bar-item w3-button">Data</a>
+	      <a href="#data" class="w3-bar-item w3-button">Data & Reports</a>
 	      <a href="#contact" class="w3-bar-item w3-button">Contact</a>
 	    </div>
 	  </div>
 	</div>
 
 <!-- Header -->
-	<header class="w3-display-container w3-content w3-wide" style="max-width:1600px;min-width:500px" id="home">
-	  <div class="w3-display-bottomleft w3-padding-large w3-opacity">
-	    <h1 class="w3-xxlarge">Housing in Bay Area</h1>
-	  </div>
+	<header class="bgimg w3-display-container w3-grayscale-min" style="he" id="home">	 
+	    <h1 class="w3-xxlarge w3-text-white">Housing in Bay Area</h1> 
 	</header>
 
 	<!-- Page content -->
 	<div class="w3-content" style="max-width:1200px">
 
 	  <!-- About Section -->
-	  <div class="w3-row w3-padding-64" id="about">
+	  <div class="w3-row w3-padding-64" id="about" style="height: 800px">
 	    <div class="w3-col m6 w3-padding-large " style="margin-top: 100px;">
 	    	<div id="city-rank"></div>
 	     	<div id="city-rank-tool"></div>
@@ -112,17 +127,9 @@
 
 	    <div class="w3-col m6 w3-padding-large">
 	      <h1 class="w3-center">About</h1><br>
-	      <div class="w3-row">
-			<a class="reports" target="blank" href="https://www.dropbox.com/s/ylkxrhkazyn50pf/Data%20Visualization%20Final%20Proposal.pdf?dl=0"> Project Proposal</a>
-			<span style="padding: 20px"></span>
-			<a class="reports" target="blank" href="https://www.dropbox.com/s/85fuecv70cytbjz/DV%20Alpha%20Release%20Report.pdf?dl=0">Alpha Release Report</a>
-			<a class="reports" target="blank" href="https://www.dropbox.com/s/ppy0ffzgytx4tvk/DV%20Beta%20Release%20Report.pdf?dl=0">Beta Release Report</a>
-			
-	      </div>
-
 	      <p class="w3-large w3-text-grey w3-hide-medium">Housing has always been an essential concern for people the whole time. Ever since COVID19, most people have to stay home and do work remotely, therefore some of them move out of the city and find a less expensive place to stay. This project aims to analyze the recent housing market in the San Francisco bay area. Some of the cities listed on
 	      	<span class="w3-tag w3-light-grey"><a href="https://www.niche.com/places-to-live/search/best-cities/m/san-francisco-metro-area/" target="_blank">Niche.com</a></span>  “2021 Best Cities/Suburbs to Live in the San Francisco Bay Area'' were chosen as the target cities for this project. In this project, I then analyze if the number of bedrooms would affect the house value in long term in each of these cities. And then I also check on the monthly percentage change of new inventory in the bay area to seek potential patterns of the market. In addition, Bitcoin has been a hot issue since 2017, especially those dramatic changes in recent months. I bring it together with this analysis and see if there is any connection between Bitcoin and the housing market in the bay area.</p>
-
+	      	<p class="w3-text-grey">*check data resources click <a href="#data" class="in-text-link">here</a></p>
 	    </div>
 	  </div>
 	  
@@ -132,7 +139,7 @@
 	  <div class="w3-row w3-padding-64" id="price-trend">
 	    <div class="w3-col l12 w3-padding-large">
 	      <h1 class="w3-center">Price Trend</h1>
-	      <p class="w3-text-grey">Generally, the sales price of a house with more bedrooms will increase faster then a house with less bedrooms. However, there is a turn in 2020. If you navigate with the interactive chart below, you could find that for cities like San Francisco and Foster City, the value of a 5 bedroom house is dropping since 2020.</p><br>
+	      <p class="w3-text-grey">Generally, the sales price of a house with more bedrooms will increase faster then a house with less bedrooms. However, there is a turn in 2020. If you navigate with the interactive chart below, you could find that for cities like San Francisco and Foster City, the value of a 5 bedroom house is dropping since 2020.(<a class="in-text-link" target="blank" href="https://www.zillow.com/research/data/">Zillow</a>)</p><br>
 	    </div>
 		<div id="trend">
 			<select id="selectButton"></select>
@@ -149,7 +156,7 @@
 	  <div class="w3-row w3-padding-64" id="new-listing">
 	    <div class="w3-col l12 w3-padding-large">
 	      <h1 class="w3-center">New Listing</h1><br>
-	      <p class="w3-text-grey">When we check on the data from <a class="data-link" target="blank" href="https://www.realtor.com/research/data/">Relator</a>, we could see that January has been the month that when people will sell their houses. However there is a significant change in 2019 and 2020. The inventory amount of new listing increaed in a sudden around 130% in Jan, 2019 and around 160% in Jan, 2020. </p>
+	      <p class="w3-text-grey">When we check on the data from <a class="in-text-link" target="blank" href="https://www.realtor.com/research/data/">Relator</a>, we could see that January has been the month that when people will sell their houses. However there is a significant change in 2019 and 2020. The inventory amount of new listing increaed in a sudden around 130% in Jan, 2019 and around 160% in Jan, 2020. </p>
 	    </div>
 	    
 	    <div class="w3-col l12 w3-padding-large">
@@ -166,7 +173,7 @@
 	  <div class="w3-row w3-padding-64" id="sale-bitcoin">
 	    <div class="w3-col l12 w3-padding-large">
 	      <h1 class="w3-center">Pending Listing and Bitcoin</h1>
-	      <p class="w3-text-grey">Bitcoin is one of the most popular cryptocurrency in the world. It could be traded 24 hours a day. In here, the daily closing price is selected as our sample and used a boxplot to represent a montly daily percentage change in ratio. We also check on the pending listing amount change ratio monlty for the listed two areas.</p>			
+	      <p class="w3-text-grey">Bitcoin is one of the most popular cryptocurrency in the world. It could be traded 24 hours a day. In here, the daily closing price is selected as our sample and used a boxplot to represent a monthly daily percentage change in ratio. We also check on the pending listing amount change ratio monlty for the listed two areas.</p>			
 			<div id="bp"></div>
 	    </div>
 	   		<div id='bp-city'></div>
@@ -176,15 +183,24 @@
 	  <hr>
 	  <!-- Data Source Section -->
 	  <div class="w3-container w3-padding-64" id="data">
-	   <div class="w3-col l6 w3-padding-large">
-	      <h1 class="w3-center">Data Sources</h1><br>
-		  	<ul class="w3-ul w3-hoverable"> 
-			  <a class="data-link" target="blank" href="https://www.zillow.com/research/data/"><li>Zillow</li></a>
-			  <a class="data-link" target="blank" href="https://www.kaggle.com/sudalairajkumar/cryptocurrencypricehistory"><li>Kaggle</li></a>
-			  <a class="data-link" target="blank" href="https://www.redfin.com/news/data-center/"><li>Redfin</li></a>
-			  <a class="data-link" target="blank" href="https://www.niche.com/places-to-live/search/best-cities/m/san-francisco-metro-area/"><li>Niche</li></a>
-			  <a class="data-link" target="blank" href="https://www.realtor.com/research/data/"><li>Relator</li></a>
-			</ul>
+	  	<h1 class="w3-center">Data & Reports</h1>
+	   <div class="w3-row l6 w3-padding-large w3-left-align">
+	      <h3>Data Sources</h3><br>
+		  	<div class="d-and-r"> 
+			  <a class="data-link" target="blank" href="https://www.zillow.com/research/data/">Zillow</a>
+			  <a class="data-link" target="blank" href="https://www.kaggle.com/sudalairajkumar/cryptocurrencypricehistory">Kaggle</a>
+			  <a class="data-link" target="blank" href="https://www.redfin.com/news/data-center/">Redfin</a>
+			  <a class="data-link" target="blank" href="https://www.niche.com/places-to-live/search/best-cities/m/san-francisco-metro-area/">Niche</a>
+			  <a class="data-link" target="blank" href="https://www.realtor.com/research/data/">Relator</a>
+			</div>
+		</div>
+		<div class="w3-row l6 w3-padding-large w3-left-align">
+	      	<h3 >Progress Reports</h3><br>
+		  	<div class="d-and-r"> 
+				<a class="reports " target="blank" href="https://www.dropbox.com/s/ylkxrhkazyn50pf/Data%20Visualization%20Final%20Proposal.pdf?dl=0">Project Proposal</a>
+				<a class="reports" target="blank" href="https://www.dropbox.com/s/85fuecv70cytbjz/DV%20Alpha%20Release%20Report.pdf?dl=0">Alpha Release Report</a>
+				<a class="reports" target="blank" href="https://www.dropbox.com/s/ppy0ffzgytx4tvk/DV%20Beta%20Release%20Report.pdf?dl=0">Beta Release Report</a>
+			</div>
 		</div>
 	  </div>
 
