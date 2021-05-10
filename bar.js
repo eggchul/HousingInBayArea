@@ -200,7 +200,8 @@
                   {
                       data: { time: d3.timeParse("%Y%m")('202006'), new_listing_count_mm: 13.61 },
                       note: {
-                          label: "“Pent-up Supply” Floods San Francisco Housing Market",
+                          title: "“Pent-up Supply” Floods San Francisco Housing Market",
+                          label: "06/20 13.61%, 07/20 3.27%",
                           lineType:"none",
                           orientation: "leftRight",
                           align: "middle",
