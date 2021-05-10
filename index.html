@@ -1,250 +1,350 @@
 <!DOCTYPE html>
 <html style="background: #F0F8FF">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Housing In Bay Area Analysis</title>
-	<script src="https://d3js.org/topojson.v1.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Housing In Bay Area Analysis</title>
+    <script src="https://d3js.org/topojson.v1.min.js"></script>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
-	<script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<link rel="icon" href="logo.png">
-	<link href='https://fonts.googleapis.com/css?family=Dekko' rel='stylesheet'>
+    <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="icon" href="logo.png">
+    <link href='https://fonts.googleapis.com/css?family=Dekko' rel='stylesheet'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
 </head>
 
 <style type="text/css">
-	.axis--x path {
-	  display: none;
-	}
-
-	div.tooltip {
-	    position: absolute;
-	    text-align: left;
-	    padding: 2px;
-	    font: 16px sans-serif;
-	    color: white;
-	    background: linear-gradient(to bottom right, #FF69B4, #FFA500);
-	    border: 0px;
-	    border-radius: 4px;
-	    pointer-events: none;
-	}
-	.line {
-	  fill: none;
-	  stroke: steelblue;
-	  stroke-width: 1.5px;
-	}
-
-	.titleFont{
-		color: darkcyan;
-	}
-
-	.fontstyle1{
-		color: darkorange;
-	    font-size: 20px;
-	    font-weight: bold;
-	}
-
-	.fontstyle2{
-		color: darkgreen;
-	    font-size: 20px;
-	    font-weight: bold;
-	}
-
-    .maincontent{
-    	display: flex;
-    	margin-left: 30px;
-    	margin-right: 30px;
-    	flex-direction: column;
+    .axis--x path {
+        display: none;
     }
 
-    .container{
-    	margin: 10px;
-    	border-bottom: 6px solid #DCDCDC;
+    div.tooltip {
+        position: absolute;
+        text-align: left;
+        padding: 2px;
+        font: 16px sans-serif;
+        color: white;
+        background: linear-gradient(to bottom right, #FF69B4, #FFA500);
+        border: 0px;
+        border-radius: 4px;
+        pointer-events: none;
     }
-    .data-link{
-    	/*text-decoration: none;*/
-    	font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
-    	font-size: 24px;
-    	font-weight: bold;
-    	color: #1E90FF;
-    }
-    .reports{
-    	font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
-    	font-size: 24px;
-    	font-weight: bold;
-    	color: #1E90FF;
-    }
-    .in-text-link{
-    	color: #1E90FF;
-    }
-	.grid path {
-  		stroke-width: 0;
-	}
-	.d-and-r{
-		display: flex; 
-		justify-content: space-around;
-	}
-	.bgimg {
-	  background-position: center;
-	  background-size: cover;
-	  background-image: url("https://github.com/eggchul/HousingInBayArea/blob/main/fostercity.jpg");
-	  min-height: 75%;
-	}
 
+    .line {
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+    }
+
+    .titleFont {
+        color: darkcyan;
+    }
+
+    .fontstyle1 {
+        color: darkorange;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .fontstyle2 {
+        color: darkgreen;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .maincontent {
+        display: flex;
+        margin-left: 30px;
+        margin-right: 30px;
+        flex-direction: column;
+    }
+
+    .container {
+        margin: 10px;
+        border-bottom: 6px solid #DCDCDC;
+    }
+
+    .annotation-note-title, text.title {
+        font-weight: bold;
+    }
+
+    .data-link {
+        /*text-decoration: none;*/
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+        font-size: 24px;
+        font-weight: bold;
+        color: #1E90FF;
+    }
+
+    .reports {
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+        font-size: 24px;
+        font-weight: bold;
+        color: #1E90FF;
+    }
+
+    .in-text-link {
+        color: #1E90FF;
+    }
+
+    .grid path {
+        stroke-width: 0;
+    }
+
+    .d-and-r {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .bgimg {
+
+        background-position: center;
+        background-size: cover ;
+        background-image: url(/fostercity.jpg);
+        min-height: 800px;
+        width: 100vw;
+    }
+
+    .header-font {
+        font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+        font-size: 90px;
+        text-shadow: 2px 2px #1E90FF, 0 0 5px grey;
+    }
+
+    .clickable-note {
+        cursor: pointer;
+    }
+    .usage-hint-text-style{
+        background: -webkit-linear-gradient(red, blue);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-family: 'Dekko';
+        font-size: 20px;
+    }
 </style>
 <body>
 <!-- Navbar (sit on top) -->
-	<div class="w3-top">
-	  <div class="w3-bar w3-white w3-padding w3-card" style="letter-spacing:4px;">
-	    <a href="#home" class="w3-bar-item w3-button">Housing In Bay Area Analysis</a>
-	    <!-- Right-sided navbar links. Hide them on small screens -->
-	    <div class="w3-right w3-hide-small">
-	      <a href="#about" class="w3-bar-item w3-button">About</a>
-	      <a href="#price-trend" class="w3-bar-item w3-button">Price Trend</a>
-	      <a href="#new-listing" class="w3-bar-item w3-button">New Listing</a>
-	      <a href="#sale-bitcoin" class="w3-bar-item w3-button">Pending Listing & Bitcoin</a>
-	      <a href="#data" class="w3-bar-item w3-button">Data & Reports</a>
-	      <a href="#contact" class="w3-bar-item w3-button">Contact</a>
-	    </div>
-	  </div>
-	</div>
+<div class="w3-top">
+    <div class="w3-bar w3-white w3-padding w3-card" style="letter-spacing:4px;">
+        <a href="#home" class="w3-bar-item w3-button">Housing In Bay Area Analysis</a>
+        <!-- Right-sided navbar links. Hide them on small screens -->
+        <div class="w3-right w3-hide-small">
+            <a href="#about" class="w3-bar-item w3-button">About</a>
+            <a href="#price-trend" class="w3-bar-item w3-button">Price Trend</a>
+            <a href="#new-listing" class="w3-bar-item w3-button">New Listing</a>
+            <a href="#sale-bitcoin" class="w3-bar-item w3-button">Pending Listing & Bitcoin</a>
+            <a href="#data" class="w3-bar-item w3-button">Data & Reports</a>
+            <a href="#contact" class="w3-bar-item w3-button">Contact</a>
+        </div>
+    </div>
+</div>
 
 <!-- Header -->
-	<header class="bgimg w3-display-container w3-grayscale-min" id="home">	
-		<div class="w3-content">
-			<h1 class="w3-xxlarge w3-text-white">Housing in Bay Area</h1> 
-		</div>
-	</header>
+<header class="bgimg w3-container w3-content w3-wide" style="max-width:100vw; min-width:500px" id="home">
+    <!-- 		<img class="w3-image" src="https://raw.githubusercontent.com/eggchul/HousingInBayArea/main/fostercity.jpg" alt="Hamburger Catering" width="1600" height="800"> -->
+    <div class="w3-center" style="margin-top: 400px">
+        <h1 class="w3-text-white header-font">Housing In Bay Area</h1>
+    </div>
+</header>
 
-	<!-- Page content -->
-	<div class="w3-content" style="max-width:1200px">
+<!-- Page content -->
+<div class="w3-content" style="max-width:1200px">
 
-	  <!-- About Section -->
-	  <div class="w3-row w3-padding-64" id="about" style="height: 800px">
-	    <div class="w3-col m6 w3-padding-large " style="margin-top: 100px;">
-	    	<div id="city-rank"></div>
-	     	<div id="city-rank-tool"></div>
-	    </div>
+    <!-- About Section -->
+    <div class="w3-row w3-padding-64" id="about" style="height: 900px">
+        <div class="w3-col m6 w3-padding-large " style="margin-top: 100px;">
+            <p class="w3-text-grey">1 Source: <a
+                    href="https://www.niche.com/places-to-live/search/best-cities/m/san-francisco-metro-area/"
+                    target="_blank">Niche.com</a></span></p>
+            <div id="city-rank"></div>
+            <div id="city-rank-tool"></div>
+        </div>
 
-	    <div class="w3-col m6 w3-padding-large">
-	      <h1 class="w3-center">About</h1><br>
-	      <p class="w3-large w3-text-grey w3-hide-medium">Housing has always been an essential concern for people the whole time. Ever since COVID19, most people have to stay home and do work remotely, therefore some of them move out of the city and find a less expensive place to stay. This project aims to analyze the recent housing market in the San Francisco bay area. Some of the cities listed on
-	      	<span class="w3-tag w3-light-grey"><a href="https://www.niche.com/places-to-live/search/best-cities/m/san-francisco-metro-area/" target="_blank">Niche.com</a></span>  “2021 Best Cities/Suburbs to Live in the San Francisco Bay Area'' were chosen as the target cities for this project. In this project, I then analyze if the number of bedrooms would affect the house value in long term in each of these cities. And then I also check on the monthly percentage change of new inventory in the bay area to seek potential patterns of the market. In addition, Bitcoin has been a hot issue since 2017, especially those dramatic changes in recent months. I bring it together with this analysis and see if there is any connection between Bitcoin and the housing market in the bay area.</p>
-	      	<p class="w3-text-grey">*check data resources click <a href="#data" class="in-text-link">here</a></p>
-	    </div>
-	  </div>
-	  
-	  <hr>
-	  
-	  <!-- Trend Section -->
-	  <div class="w3-row w3-padding-64" id="price-trend">
-	    <div class="w3-col l12 w3-padding-large">
-	      <h1 class="w3-center">Price Trend</h1>
-	      <p class="w3-text-grey">Generally, the sales price of a house with more bedrooms will increase faster then a house with less bedrooms. However, there is a turn in 2020. If you navigate with the interactive chart below, you could find that for cities like San Francisco and Foster City, the value of a 5 bedroom house is dropping since 2020.(<a class="in-text-link" target="blank" href="https://www.zillow.com/research/data/">Zillow</a>)</p><br>
-	    </div>
-		<div id="trend">
-			<select id="selectButton"></select>
-			<div id="my_dataviz">
-			    <svg id="linesvg" width="1100" height="400"></svg>
-			</div>
-			<p class="w3-text-grey" style="text-align: center">The above figure(Figure 2) shows the monthly price change of house with different number of bedrooms of the selected city between 2015 and 2020</p>
-		</div>   
-	  </div>
+        <div class="w3-col m6 w3-padding-large">
+            <h1 class="w3-center">About</h1><br>
+            <p class="w3-large w3-text-grey">Housing has always been an essential concern for people the
+                whole time. Ever since COVID19, most people have to stay home and do work remotely, therefore some of
+                them move out of the city and find a less expensive place to stay. This project aims to analyze the
+                recent housing market in the San Francisco bay area. Some of the cities listed on
+                <span class="w3-text-grey"><a
+                        href="https://www.niche.com/places-to-live/search/best-cities/m/san-francisco-metro-area/"
+                        target="_blank">Niche.com</a></span> “2021 Best Cities/Suburbs to Live in the San Francisco Bay
+                Area'' were chosen as the target cities for this project. In this project, I then analyze if the number
+                of bedrooms would affect the house value in long term in each of these cities. And then I also check on
+                the monthly percentage change of new inventory in the bay area to seek potential patterns of the market.
+                In addition, Bitcoin has been a hot issue since 2017, especially those dramatic changes in recent
+                months. I bring it together with this analysis and see if there is any connection between Bitcoin and
+                the housing market in the bay area.</p>
+            <p class="w3-text-grey">*check data resources click <a href="#data" class="in-text-link">here</a></p>
+        </div>
+    </div>
 
-	  <hr>
-	  
-	  <!-- New Listing Section -->
-	  <div class="w3-row w3-padding-64" id="new-listing">
-	    <div class="w3-col l12 w3-padding-large">
-	      <h1 class="w3-center">New Listing</h1><br>
-	      <p class="w3-text-grey">When we check on the data from <a class="in-text-link" target="blank" href="https://www.realtor.com/research/data/">Relator</a>, we could see that January has been the month that when people will sell their houses. However there is a significant change in 2019 and 2020. The inventory amount of new listing increaed in a sudden around 130% in Jan, 2019 and around 160% in Jan, 2020. </p>
-	    </div>
-	    
-	    <div class="w3-col l12 w3-padding-large">
-	    	<select id="selectButton2"></select>
-	    	<div id="bar-chart"></div>
-	    	<div id="bar-chart-tool"></div>
-	    	<p class="w3-text-grey">Figure 3 above shows the monthly amount of new listing inventory change in percentage in the bay area.</p><br>
-	    </div>
-	  </div>
+    <hr>
 
-	  <hr>
-	  
-	  <!-- Pending Listing and BitCoin Section -->
-	  <div class="w3-row w3-padding-64" id="sale-bitcoin">
-	    <div class="w3-col l12 w3-padding-large">
-	      <h1 class="w3-center">Pending Listing and Bitcoin</h1>
-	      <p class="w3-text-grey">Bitcoin is one of the most popular cryptocurrency in the world. It could be traded 24 hours a day. In here, the daily closing price is selected as our sample and used a boxplot to represent a monthly daily percentage change in ratio. We also check on the pending listing amount change ratio monlty for the listed two areas.</p>			
-			<div id="bp"></div>
-	    </div>
-	   		<div id='bp-city'></div>
-	   		<p class="w3-text-grey">Figure 4 above shows the montly close price ratio change of Bitcoin in boxplot and the monthly ratio change of pending listing in the two listed areas.</p>
-	  </div>
+    <!-- Trend Section -->
+    <div class="w3-row w3-padding-64" id="price-trend">
+        <div class="w3-col l12 w3-padding-large">
+            <h1 class="w3-center">Price Trend</h1>
+            <p class="w3-large w3-text-grey">Generally, the sales price of a house with more bedrooms will increase faster then a
+                house with less bedrooms. However, there is a turn in 2020. If you navigate with the interactive chart
+                below, you could find that for cities like San Francisco and Foster City, the value of a 5 bedroom house
+                is dropping since 2020.(<a class="in-text-link" target="blank"
+                                           href="https://www.zillow.com/research/data/">Zillow</a>)</p><br>
+        </div>
+        <div id="trend">
+            <div style="margin-left: 10vw">
+                <select id="selectButton"></select>
+                <span style="padding: 10px"></span>
+                <span class="usage-hint-text-style">You can click on the graph and zoom in</span>
+                <span>💡</span>
+            </div>
 
-	  <hr>
-	  <!-- Data Source Section -->
-	  <div class="w3-container w3-padding-64" id="data">
-	  	<h1 class="w3-center">Data & Reports</h1>
-	   <div class="w3-row l6 w3-padding-large w3-left-align">
-	      <h3>Data Sources</h3><br>
-		  	<div class="d-and-r"> 
-			  <a class="data-link" target="blank" href="https://www.zillow.com/research/data/">Zillow</a>
-			  <a class="data-link" target="blank" href="https://www.kaggle.com/sudalairajkumar/cryptocurrencypricehistory">Kaggle</a>
-			  <a class="data-link" target="blank" href="https://www.redfin.com/news/data-center/">Redfin</a>
-			  <a class="data-link" target="blank" href="https://www.niche.com/places-to-live/search/best-cities/m/san-francisco-metro-area/">Niche</a>
-			  <a class="data-link" target="blank" href="https://www.realtor.com/research/data/">Relator</a>
-			</div>
-		</div>
-		<div class="w3-row l6 w3-padding-large w3-left-align">
-	      	<h3 >Progress Reports</h3><br>
-		  	<div class="d-and-r"> 
-				<a class="reports " target="blank" href="https://www.dropbox.com/s/ylkxrhkazyn50pf/Data%20Visualization%20Final%20Proposal.pdf?dl=0">Project Proposal</a>
-				<a class="reports" target="blank" href="https://www.dropbox.com/s/85fuecv70cytbjz/DV%20Alpha%20Release%20Report.pdf?dl=0">Alpha Release Report</a>
-				<a class="reports" target="blank" href="https://www.dropbox.com/s/ppy0ffzgytx4tvk/DV%20Beta%20Release%20Report.pdf?dl=0">Beta Release Report</a>
-			</div>
-		</div>
-	  </div>
+            <div id="my_dataviz">
+                <svg id="linesvg" width="1100" height="400"></svg>
+            </div>
+            <p class="w3-text-grey" style="text-align: center">The above figure(Figure 2) shows the monthly price change
+                of house with different number of bedrooms of the selected city between 2015 and 2020</p>
+            <p class="w3-text-grey">Source:
+                <a  target="blank" href="https://www.zillow.com/research/data/">
+                    Zillow
+                </a>
+                </span>
+            </p>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- New Listing Section -->
+    <div class="w3-row w3-padding-64" id="new-listing">
+        <div class="w3-col l12 w3-padding-large">
+            <h1 class="w3-center">New Listing</h1><br>
+            <p class="w3-text-grey w3-large">When we check on the data from <a class="in-text-link" target="blank"
+                                                                      href="https://www.realtor.com/research/data/">Relator</a>,
+                we could see that January has been the month that when people will sell their houses. However there is a
+                significant change in 2019 and 2020. The inventory amount of new listing increaed in a sudden around
+                130% in Jan, 2019 and around 160% in Jan, 2020. </p>
+        </div>
+
+        <div class="w3-col l12 w3-padding-large">
+            <div style="margin-left: 10vw">
+                <select id="selectButton2"></select> <br/>
+                <span class="usage-hint-text-style">You can click on the annotation title to check news link</span>
+                <span>💡</span>
+            </div>
+            <div id="bar-chart"></div>
+            <div id="bar-chart-tool"></div>
+            <p class="w3-text-grey">Source:
+                <a class="w3-text-grey" target="blank"
+                   href="https://www.realtor.com/research/data/">Relator</a>
+            </p>
+            <p class="w3-text-grey">Figure 3 above shows the monthly amount of new listing inventory change in
+                percentage in the bay area.</p><br>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Pending Listing and BitCoin Section -->
+    <div class="w3-row w3-padding-64" id="sale-bitcoin">
+        <div class="w3-col l12 w3-padding-large">
+            <h1 class="w3-center">Pending Listing and Bitcoin</h1>
+            <p class="w3-text-grey w3-large">Bitcoin is one of the most popular cryptocurrency in the world. It could be traded
+                24 hours a day. In here, the daily closing price is selected as our sample and used a boxplot to
+                represent a monthly daily percentage change in ratio. We also check on the pending listing amount change
+                ratio monlty for the listed two areas.</p>
+        </div>
+        <h4 style="margin-left: 10vw">
+            <span class="usage-hint-text-style">You can click on the graph and zoom in to check details</span>
+            <span>💡</span>
+        </h4>
+        <div id="bp"></div>
+        <div id='bp-city'></div>
+        <p class="w3-text-grey">Source:
+            <a class="w3-text-grey" target="blank"
+               href="https://www.realtor.com/research/data/">Relator</a>
+            and
+            <a class="w3-text-grey" target="blank"
+               href="https://www.kaggle.com/sudalairajkumar/cryptocurrencypricehistory">Kaggle</a>
+            </span>
+        </p>
+        <p class="w3-text-grey">Figure 4 above shows the montly close price ratio change of Bitcoin in boxplot and the
+            monthly ratio change of pending listing in the two listed areas.</p>
+    </div>
+
+    <hr>
+    <!-- Data Source Section -->
+    <div class="w3-container w3-padding-64" id="data">
+        <h1 class="w3-center">Data & Reports</h1>
+        <div class="w3-row l6 w3-padding-large w3-left-align">
+            <h3>Data Sources</h3><br>
+            <div class="d-and-r">
+                <a class="data-link" target="blank" href="https://www.zillow.com/research/data/">Zillow</a>
+                <a class="data-link" target="blank"
+                   href="https://www.kaggle.com/sudalairajkumar/cryptocurrencypricehistory">Kaggle</a>
+                <a class="data-link" target="blank" href="https://www.redfin.com/news/data-center/">Redfin</a>
+                <a class="data-link" target="blank"
+                   href="https://www.niche.com/places-to-live/search/best-cities/m/san-francisco-metro-area/">Niche</a>
+                <a class="data-link" target="blank" href="https://www.realtor.com/research/data/">Relator</a>
+            </div>
+        </div>
+        <div class="w3-row l6 w3-padding-large w3-left-align">
+            <h3>Progress Reports</h3><br>
+            <div class="d-and-r">
+                <a class="reports " target="blank"
+                   href="https://www.dropbox.com/s/ylkxrhkazyn50pf/Data%20Visualization%20Final%20Proposal.pdf?dl=0">Project
+                    Proposal</a>
+                <a class="reports" target="blank"
+                   href="https://www.dropbox.com/s/85fuecv70cytbjz/DV%20Alpha%20Release%20Report.pdf?dl=0">Alpha Release
+                    Report</a>
+                <a class="reports" target="blank"
+                   href="https://www.dropbox.com/s/ppy0ffzgytx4tvk/DV%20Beta%20Release%20Report.pdf?dl=0">Beta Release
+                    Report</a>
+            </div>
+        </div>
+    </div>
 
 
-	  <hr>
-	  <!-- Contact Section -->
-	  <div class="w3-container w3-padding-64" id="contact">
-	    <h1>Contact</h1><br>
-	    <p>If you have any question about the source or visual design, welcome to contact me</p>
-	    
-	    <p class="w3-text-blue-grey w3-xlarge">
-	    	<b>Danielle Hu</b>
-	    	<a href="https://www.linkedin.com/in/danielle-hu/" target="_blank">
-                    <svg color="rgb(10,102,194)" width="28" height="28" viewBox="0 0 34 34" class="global-nav__logo">
-                      <title>
+    <hr>
+    <!-- Contact Section -->
+    <div class="w3-container w3-padding-64" id="contact">
+        <h1>Contact</h1><br>
+        <p>If you have any question about the source or visual design, welcome to contact me</p>
+
+        <p class="w3-text-blue-grey w3-xlarge">
+            <b>Danielle Hu</b>
+            <a href="https://www.linkedin.com/in/danielle-hu/" target="_blank">
+                <svg color="rgb(10,102,194)" width="28" height="28" viewBox="0 0 34 34" class="global-nav__logo">
+                    <title>
                         LinkedIn
-                      </title>
+                    </title>
 
-                      <g>
-                        <!---->          <path d="M34,2.5v29A2.5,2.5,0,0,1,31.5,34H2.5A2.5,2.5,0,0,1,0,31.5V2.5A2.5,2.5,0,0,1,2.5,0h29A2.5,2.5,0,0,1,34,2.5ZM10,13H5V29h5Zm.45-5.5A2.88,2.88,0,0,0,7.59,4.6H7.5a2.9,2.9,0,0,0,0,5.8h0a2.88,2.88,0,0,0,2.95-2.81ZM29,19.28c0-4.81-3.06-6.68-6.1-6.68a5.7,5.7,0,0,0-5.06,2.58H17.7V13H13V29h5V20.49a3.32,3.32,0,0,1,3-3.58h.19c1.59,0,2.77,1,2.77,3.52V29h5Z" fill="currentColor"></path>
-                      </g>
-                    </svg>
-                  </a>
-		</p>
-		<p class="w3-text-blue-grey w3-xlarge"><b>California, U.S.A.</b></p>
-		<p class="w3-text-blue-grey w3-xlarge"><b>Email: lhu@usfca.edu</b></p>
-	  </div>
+                    <g>
+                        <!---->
+                        <path d="M34,2.5v29A2.5,2.5,0,0,1,31.5,34H2.5A2.5,2.5,0,0,1,0,31.5V2.5A2.5,2.5,0,0,1,2.5,0h29A2.5,2.5,0,0,1,34,2.5ZM10,13H5V29h5Zm.45-5.5A2.88,2.88,0,0,0,7.59,4.6H7.5a2.9,2.9,0,0,0,0,5.8h0a2.88,2.88,0,0,0,2.95-2.81ZM29,19.28c0-4.81-3.06-6.68-6.1-6.68a5.7,5.7,0,0,0-5.06,2.58H17.7V13H13V29h5V20.49a3.32,3.32,0,0,1,3-3.58h.19c1.59,0,2.77,1,2.77,3.52V29h5Z"
+                              fill="currentColor"></path>
+                    </g>
+                </svg>
+            </a>
+        </p>
+        <p class="w3-text-blue-grey w3-xlarge"><b>California, U.S.A.</b></p>
+        <p class="w3-text-blue-grey w3-xlarge"><b>Email: lhu@usfca.edu</b></p>
+    </div>
 
 
-	  
-	<!-- End page content -->
-	</div>
+    <!-- End page content -->
+</div>
 
-	<!-- Footer -->
-	<footer class="w3-center w3-light-grey w3-padding-32">
-	  <p>updated at April 2021</p>
-	</footer>
+<!-- Footer -->
+<footer class="w3-center w3-light-grey w3-padding-32">
+    <p>updated in May 2021</p>
+</footer>
 
-	<script src="housepriceline.js"></script>
-	<script src="boxplot.js"></script>
-	<script src="rank.js"></script>
-	<script src="bar.js"></script>
+<script src="housepriceline.js"></script>
+<script src="boxplot.js"></script>
+<script src="rank.js"></script>
+<script src="bar.js"></script>
 
 </body>
 </html>

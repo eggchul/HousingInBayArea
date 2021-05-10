@@ -15,6 +15,7 @@ var svg = d3.select("#city-rank")
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
 var div = d3.select("#city-rank-tool").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);

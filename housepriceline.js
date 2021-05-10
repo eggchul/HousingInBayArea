@@ -108,7 +108,7 @@ function draw_line_chart(city){
                 .attr("transform", "translate(0," + height + ")")
                 .call(d3.axisBottom(x));
 
-            g.append("g")         
+            g.append("g")
               .attr("class", "grid")
               .call(d3.axisLeft(y).tickSize(-width + margin.right).tickFormat(""))
               svg.selectAll(".tick line").attr("stroke", "lightgray")
@@ -127,6 +127,7 @@ function draw_line_chart(city){
             var city = g.selectAll(".city")
                 .data(types)
                 .enter().append("svg")
+                .attr("id", d => `room-${d.id.substring(0, 3).toUpperCase()}`)
                 .attr("class", "city")
                 .attr("width", width - margin.right);
 
@@ -134,6 +135,7 @@ function draw_line_chart(city){
             function hover(elem) {
                 var attrs = elem.srcElement.attributes;
                 let id = attrs['data-id'].value;
+                let currentRoom = g.select(`[id="room-${id}"]`);
                 let path = city.select(`[id="${id}"]`);
                 let dots = city.select(`[id="dots-${id}"]`).selectAll('circle');
                 if (path.attr('visibility') == 'hidden') {
@@ -145,14 +147,16 @@ function draw_line_chart(city){
                 city.selectAll("circle").style('fill', d => {
                     return 'lightgrey';
                 });
+                currentRoom.raise();
                 path.style('stroke', z(elem.srcElement['id']));
-                dots.style('fill', z(elem.srcElement['id']));  
+                dots.style('fill', z(elem.srcElement['id']));
             }
 
             function hoverOnLine(elem) {
                 var d = elem.view.d
                 var attrs = elem.srcElement.attributes;
                 let id = attrs['data-id'].value;
+                let currentRoom = g.select(`[id="room-${id}"]`);
                 let path = city.select(`[id="${id}"]`);
                 let dots = city.select(`[id="dots-${id}"]`).selectAll('circle');
                 if (path.attr('visibility') == 'hidden') {
@@ -166,7 +170,7 @@ function draw_line_chart(city){
                 });
                 path.style('stroke', z(elem.srcElement['id']));
                 dots.style('fill', z(elem.srcElement['id']));
-                dots.raise();
+                currentRoom.raise();
             }
 
             function exit(elem) {
@@ -185,7 +189,7 @@ function draw_line_chart(city){
                 div.transition()
                         .duration(500)
                         .style("opacity", 0);
-                    
+
             }
 
             function click(elem) {
